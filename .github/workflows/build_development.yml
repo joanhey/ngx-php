@@ -3,7 +3,7 @@ name: Build Nightly PHP
 on:
   push:
     branches:
-      - development
+      - "development"
     paths:
       - "src/**"
       - "t/**"
@@ -12,7 +12,7 @@ on:
       - "config"
   pull_request:
     branches:
-      - development
+      - "development"
     paths:
       - "src/**"
       - "t/**"
