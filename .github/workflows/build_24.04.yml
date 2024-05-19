@@ -26,7 +26,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Install dependencies
-        run: sudo apt-get install -yqq cpanminus libxml2-dev systemtap-sdt-dev zlib1g-dev libpcre3-dev libargon2-dev libsodium-dev libkrb5-dev
+        run: sudo apt-get install -yqq cpanminus libxml2-dev systemtap-sdt-dev zlib1g-dev libpcre3-dev libargon2-dev libsodium-dev libkrb5-dev redis-server redis-tools memcached
 
       - name: Setup PHP-${{ matrix.php_version }}
         uses: shivammathur/setup-php@v2
@@ -55,7 +55,6 @@ jobs:
 
       - name: Install Redis & Memcached
         run: |
-          sudo apt-get install -y redis-server redis-tools memcached
           sudo redis-server /etc/redis/redis.conf
 
       - name: Perl packages
