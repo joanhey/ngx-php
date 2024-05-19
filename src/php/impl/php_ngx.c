@@ -37,7 +37,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "php_ngx_var.h"
 #include "php_ngx_header.h"
 #include "php_ngx_cookie.h"
-#include "zend_frameless_function.h"
 
 #include "../../ngx_http_php_module.h"
 
