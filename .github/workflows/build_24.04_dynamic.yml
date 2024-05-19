@@ -1,4 +1,4 @@
-name: 22.04 Ngx-php & PHP build test
+name: Build dynamic test Ubuntu 24.04
 
 on:
   workflow_call:
@@ -10,18 +10,18 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
 
     strategy:
       matrix:
-        php_version: ["8.1", "8.2", "8.3"]
+        php_version: ["8.1", "8.2", "8.3"] # "7.0", "7.1", "7.2", "7.3", 
         # Only nginx stable and mainline versions for faster tests
         nginx_version: ["1.25.5", "1.26.0"]
         # Disable fail-fast to allow all failing versions to fail in a
         # single build, rather than stopping when the first one fails.
       fail-fast: false
 
-    name: PHP-${{ matrix.php_version }} Nginx ${{ matrix.nginx_version }}
+    name: 22.04 Dynamic PHP-${{ matrix.php_version }} Nginx ${{ matrix.nginx_version }}
 
     steps:
       - uses: actions/checkout@v4
@@ -45,6 +45,7 @@ jobs:
         env:
           PHP_SRC_VERSION: ${{ matrix.php_version }}
           NGINX_SRC_VERSION: ${{ matrix.nginx_version }}
+          NGINX_MODULE: "DYNAMIC"
         run: ./.github/ngx-php/compile-ngx.sh
 
       - name: MySQL Start and create table
@@ -65,7 +66,5 @@ jobs:
         env:
           PHP_SRC_VERSION: ${{ matrix.php_version }}
         run: |
-          sudo cp .github/ngx-php/php/99-xdebug.ini /etc/php/${PHP_SRC_VERSION}/embed/conf.d/
-          sudo cp .github/ngx-php/php/99-xdebug.ini /etc/php/${PHP_SRC_VERSION}/cli/conf.d/
           sudo sed -i "s|opcache.jit=off|opcache.jit=tracing|g" /etc/php/${PHP_SRC_VERSION}/embed/conf.d/10-opcache.ini
           ./.github/ngx-php/test.sh

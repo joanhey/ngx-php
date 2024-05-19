@@ -1,4 +1,4 @@
-name: 22.04 Ngx-php & PHP build test
+name: 24.04 Ngx-php & PHP build test
 
 on:
   workflow_call:
@@ -10,7 +10,7 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
 
     strategy:
       matrix:
