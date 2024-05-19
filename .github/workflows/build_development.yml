@@ -1,6 +1,10 @@
 name: Build Nightly PHP
 
 on:
+  # Each 1 of month
+  schedule:
+    - cron: "0 0 1 * *"
+
   push:
     branches:
       - "development"
