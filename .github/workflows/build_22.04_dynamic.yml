@@ -21,7 +21,7 @@ jobs:
         # single build, rather than stopping when the first one fails.
       fail-fast: false
 
-    name: 22.04 Dynamic PHP-${{ matrix.php_version }} Nginx ${{ matrix.nginx_version }}
+    name: Dynamic PHP-${{ matrix.php_version }} Nginx ${{ matrix.nginx_version }}
 
     steps:
       - uses: actions/checkout@v4
