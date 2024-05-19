@@ -1,4 +1,4 @@
-name: 24.04 Ngx-php & PHP build test
+name: Build 24.04
 
 on:
   workflow_call:
@@ -66,5 +66,5 @@ jobs:
         run: |
           sudo cp .github/ngx-php/php/99-xdebug.ini /etc/php/${PHP_SRC_VERSION}/embed/conf.d/
           sudo cp .github/ngx-php/php/99-xdebug.ini /etc/php/${PHP_SRC_VERSION}/cli/conf.d/
-          sudo sed -i "s|opcache.jit=off|opcache.jit=tracing|g" /etc/php/${PHP_SRC_VERSION}/embed/conf.d/10-opcache.ini
+          sudo echo "opcache.jit=tracing" >> /etc/php/${PHP_SRC_VERSION}/embed/conf.d/10-opcache.ini
           ./.github/ngx-php/test.sh

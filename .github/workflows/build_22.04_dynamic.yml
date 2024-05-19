@@ -1,4 +1,4 @@
-name: Build dynamic test Ubuntu 22.04
+name: Build dynamic 22.04
 
 on:
   workflow_call:
@@ -66,5 +66,5 @@ jobs:
         env:
           PHP_SRC_VERSION: ${{ matrix.php_version }}
         run: |
-          sudo sed -i "s|opcache.jit=off|opcache.jit=tracing|g" /etc/php/${PHP_SRC_VERSION}/embed/conf.d/10-opcache.ini
+          sudo echo "opcache.jit=tracing" >> /etc/php/${PHP_SRC_VERSION}/embed/conf.d/10-opcache.ini
           ./.github/ngx-php/test.sh
