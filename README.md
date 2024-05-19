@@ -4,6 +4,7 @@ ngx-php
 [![GitHub release](https://img.shields.io/github/release/rryqszq4/ngx-php.svg)](https://github.com/rryqszq4/ngx-php/releases/latest)
 [![license](https://img.shields.io/badge/license-BSD--2--Clause-blue.svg)](https://github.com/rryqszq4/ngx-php/blob/master/LICENSE)
 [![QQ group](https://img.shields.io/badge/QQ--group-558795330-26bcf5.svg)](https://github.com/rryqszq4/ngx-php)
+[![Build Nightly PHP](https://github.com/rryqszq4/ngx-php/actions/workflows/build_development.yml/badge.svg)](https://github.com/rryqszq4/ngx-php/actions/workflows/build_development.yml)
 
 ngx-php is an extension module of high-performance web server nginx, which implements embedded PHP7 and PHP8 script to process nginx location and variables.  
 
