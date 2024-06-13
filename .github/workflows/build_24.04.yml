@@ -1,4 +1,4 @@
-name: Build dynamic 22.04
+name: Build 24.04
 
 on:
   workflow_call:
@@ -10,23 +10,23 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
 
     strategy:
       matrix:
-        php_version: ["8.1", "8.2", "8.3"] # "7.0", "7.1", "7.2", "7.3", 
+        php_version: ["8.2", "8.3"]
         # Only nginx stable and mainline versions for faster tests
         nginx_version: ["1.25.5", "1.26.0"]
         # Disable fail-fast to allow all failing versions to fail in a
         # single build, rather than stopping when the first one fails.
       fail-fast: false
 
-    name: Dynamic PHP-${{ matrix.php_version }} Nginx ${{ matrix.nginx_version }}
+    name: PHP-${{ matrix.php_version }} Nginx ${{ matrix.nginx_version }}
 
     steps:
       - uses: actions/checkout@v4
       - name: Install dependencies
-        run: sudo apt-get install -yqq cpanminus libxml2-dev systemtap-sdt-dev zlib1g-dev libpcre3-dev libargon2-0-dev libsodium-dev libkrb5-dev
+        run: sudo apt-get install -yqq cpanminus libxml2-dev systemtap-sdt-dev zlib1g-dev libpcre3-dev libargon2-dev libsodium-dev libkrb5-dev redis-server redis-tools memcached
 
       - name: Setup PHP-${{ matrix.php_version }}
         uses: shivammathur/setup-php@v2
@@ -45,7 +45,6 @@ jobs:
         env:
           PHP_SRC_VERSION: ${{ matrix.php_version }}
           NGINX_SRC_VERSION: ${{ matrix.nginx_version }}
-          NGINX_MODULE: "DYNAMIC"
         run: ./.github/ngx-php/compile-ngx.sh
 
       - name: MySQL Start and create table
@@ -56,7 +55,6 @@ jobs:
 
       - name: Install Redis & Memcached
         run: |
-          sudo apt-get install -y redis-server redis-tools memcached
           sudo redis-server /etc/redis/redis.conf
 
       - name: Perl packages
@@ -66,5 +64,7 @@ jobs:
         env:
           PHP_SRC_VERSION: ${{ matrix.php_version }}
         run: |
+          sudo cp .github/ngx-php/php/99-xdebug.ini /etc/php/${PHP_SRC_VERSION}/embed/conf.d/
+          sudo cp .github/ngx-php/php/99-xdebug.ini /etc/php/${PHP_SRC_VERSION}/cli/conf.d/
           sudo bash -c "echo "opcache.jit=tracing" >> /etc/php/${PHP_SRC_VERSION}/embed/conf.d/10-opcache.ini"
           ./.github/ngx-php/test.sh
