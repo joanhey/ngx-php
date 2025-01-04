@@ -46,13 +46,14 @@ ngx_http_php_zend_uthread_rewrite_inline_routine(ngx_http_request_t *r)
 
     ngx_php_set_request_status(NGX_DECLINED);
 
-    inline_code.data = ngx_pnalloc(r->pool, sizeof("function ngx_rewrite_(){  }")-1 + ngx_strlen(plcf->rewrite_inline_code->code.string) + 32);
+    inline_code.data = ngx_pnalloc(r->pool, sizeof("if(!function_exists('ngx_rewrite_')){ function ngx_rewrite_(){  } }")-1 + ngx_strlen(plcf->rewrite_inline_code->code.string) + 64);
 
-    inline_code.len = ngx_sprintf(inline_code.data, "function ngx_rewrite_%V(){ %*s }", 
-                                        &(plcf->rewrite_inline_code->code_id), 
-                                        ngx_strlen(plcf->rewrite_inline_code->code.string),
-                                        plcf->rewrite_inline_code->code.string
-                                    ) - inline_code.data;
+    inline_code.len = ngx_sprintf(inline_code.data, "if(!function_exists('ngx_rewrite_%V')){ function ngx_rewrite_%V(){ %*s } }",
+                                  &(plcf->rewrite_inline_code->code_id),
+                                  &(plcf->rewrite_inline_code->code_id),
+                                  ngx_strlen(plcf->rewrite_inline_code->code.string),
+                                  plcf->rewrite_inline_code->code.string
+                                  ) - inline_code.data;
 
     ngx_php_debug("%*s, %d", (int)inline_code.len, inline_code.data, (int)inline_code.len);
 
@@ -90,13 +91,14 @@ ngx_http_php_zend_uthread_access_inline_routine(ngx_http_request_t *r)
 
     ngx_php_set_request_status(NGX_DECLINED);
 
-    inline_code.data = ngx_pnalloc(r->pool, sizeof("function ngx_access_(){  }")-1 + ngx_strlen(plcf->access_inline_code->code.string) + 32);
+    inline_code.data = ngx_pnalloc(r->pool, sizeof("if(!function_exists('ngx_access_')){ function ngx_access_(){  } }")-1 + ngx_strlen(plcf->access_inline_code->code.string) + 64);
 
-    inline_code.len = ngx_sprintf(inline_code.data, "function ngx_access_%V(){ %*s }", 
-                                        &(plcf->access_inline_code->code_id), 
-                                        ngx_strlen(plcf->access_inline_code->code.string),
-                                        plcf->access_inline_code->code.string
-                                    ) - inline_code.data;
+    inline_code.len = ngx_sprintf(inline_code.data, "if(!function_exists('ngx_access_%V')){ function ngx_access_%V(){ %*s } }",
+                                  &(plcf->access_inline_code->code_id),
+                                  &(plcf->access_inline_code->code_id),
+                                  ngx_strlen(plcf->access_inline_code->code.string),
+                                  plcf->access_inline_code->code.string
+                                  ) - inline_code.data;
 
     ngx_php_debug("%*s, %d", (int)inline_code.len, inline_code.data, (int)inline_code.len);
 
@@ -149,13 +151,14 @@ ngx_http_php_zend_uthread_content_inline_routine(ngx_http_request_t *r)
     }
 #endif
 
-    inline_code.data = ngx_pnalloc(r->pool, sizeof("function ngx_content_(){  }")-1 + ngx_strlen(plcf->content_inline_code->code.string) + 32);
+    inline_code.data = ngx_pnalloc(r->pool, sizeof("if(!function_exists('ngx_content_')){ function ngx_content_(){  } }")-1 + ngx_strlen(plcf->content_inline_code->code.string) + 64);
 
-    inline_code.len = ngx_sprintf(inline_code.data, "function ngx_content_%V(){ %*s }", 
-                                        &(plcf->content_inline_code->code_id), 
-                                        ngx_strlen(plcf->content_inline_code->code.string),
-                                        plcf->content_inline_code->code.string
-                                    ) - inline_code.data;
+    inline_code.len = ngx_sprintf(inline_code.data, "if(!function_exists('ngx_content_%V')){ function ngx_content_%V(){ %*s } }",
+                                  &(plcf->content_inline_code->code_id),
+                                  &(plcf->content_inline_code->code_id),
+                                  ngx_strlen(plcf->content_inline_code->code.string),
+                                  plcf->content_inline_code->code.string
+                                  ) - inline_code.data;
 
     ngx_php_debug("%*s, %d", (int)inline_code.len, inline_code.data, (int)inline_code.len);
 
@@ -204,13 +207,14 @@ ngx_http_php_zend_uthread_log_inline_routine(ngx_http_request_t *r)
 
     ngx_php_set_request_status(NGX_DECLINED);
 
-    inline_code.data = ngx_pnalloc(r->pool, sizeof("function ngx_log_(){  }")-1 + ngx_strlen(plcf->log_inline_code->code.string) + 32);
+    inline_code.data = ngx_pnalloc(r->pool, sizeof("if(!function_exists('ngx_log_')){ function ngx_log_(){  } }")-1 + ngx_strlen(plcf->log_inline_code->code.string) + 64);
 
-    inline_code.len = ngx_sprintf(inline_code.data, "function ngx_log_%V(){ %*s }", 
-                                        &(plcf->log_inline_code->code_id), 
-                                        ngx_strlen(plcf->log_inline_code->code.string),
-                                        plcf->log_inline_code->code.string
-                                    ) - inline_code.data;
+    inline_code.len = ngx_sprintf(inline_code.data, "if(!function_exists('ngx_log_%V')){ function ngx_log_%V(){ %*s } }",
+                                  &(plcf->log_inline_code->code_id),
+                                  &(plcf->log_inline_code->code_id),
+                                  ngx_strlen(plcf->log_inline_code->code.string),
+                                  plcf->log_inline_code->code.string
+                                  ) - inline_code.data;
 
     ngx_php_debug("%*s, %d", (int)inline_code.len, inline_code.data, (int)inline_code.len);
 
@@ -244,13 +248,14 @@ ngx_http_php_zend_uthread_header_filter_inline_routine(ngx_http_request_t *r)
 
     ngx_php_request = r;
 
-    inline_code.data = ngx_pnalloc(r->pool, sizeof("function ngx_header_filter_(){  }")-1 + ngx_strlen(plcf->header_filter_inline_code->code.string) + 32);
+    inline_code.data = ngx_pnalloc(r->pool, sizeof("if(!function_exists('ngx_header_filter_')){ function ngx_header_filter_(){  } }")-1 + ngx_strlen(plcf->header_filter_inline_code->code.string) + 64);
 
-    inline_code.len = ngx_sprintf(inline_code.data, "function ngx_header_filter_%V(){ %*s }", 
-                                        &(plcf->header_filter_inline_code->code_id), 
-                                        ngx_strlen(plcf->header_filter_inline_code->code.string),
-                                        plcf->header_filter_inline_code->code.string
-                                    ) - inline_code.data;
+    inline_code.len = ngx_sprintf(inline_code.data, "if(!function_exists('ngx_header_filter_%V')){ function ngx_header_filter_%V(){ %*s } }",
+                                  &(plcf->header_filter_inline_code->code_id),
+                                  &(plcf->header_filter_inline_code->code_id),
+                                  ngx_strlen(plcf->header_filter_inline_code->code.string),
+                                  plcf->header_filter_inline_code->code.string
+                                  ) - inline_code.data;
 
     ngx_php_debug("%*s, %d", (int)inline_code.len, inline_code.data, (int)inline_code.len);
 
@@ -284,13 +289,14 @@ ngx_http_php_zend_uthread_body_filter_inline_routine(ngx_http_request_t *r)
 
     ngx_php_request = r;
 
-    inline_code.data = ngx_pnalloc(r->pool, sizeof("function ngx_body_filter_(){  }")-1 + ngx_strlen(plcf->body_filter_inline_code->code.string) + 32);
+    inline_code.data = ngx_pnalloc(r->pool, sizeof("if(!function_exists('ngx_body_filter_')){ function ngx_body_filter_(){  } }")-1 + ngx_strlen(plcf->body_filter_inline_code->code.string) + 64);
 
-    inline_code.len = ngx_sprintf(inline_code.data, "function ngx_body_filter_%V(){ %*s }", 
-                                        &(plcf->body_filter_inline_code->code_id), 
-                                        ngx_strlen(plcf->body_filter_inline_code->code.string),
-                                        plcf->body_filter_inline_code->code.string
-                                    ) - inline_code.data;
+    inline_code.len = ngx_sprintf(inline_code.data, "if(!function_exists('ngx_body_filter_%V')){ function ngx_body_filter_%V(){ %*s } }",
+                                  &(plcf->body_filter_inline_code->code_id),
+                                  &(plcf->body_filter_inline_code->code_id),
+                                  ngx_strlen(plcf->body_filter_inline_code->code.string),
+                                  plcf->body_filter_inline_code->code.string
+                                  ) - inline_code.data;
 
     ngx_php_debug("%*s, %d", (int)inline_code.len, inline_code.data, (int)inline_code.len);
 
@@ -421,6 +427,13 @@ ngx_http_php_zend_uthread_create(ngx_http_request_t *r, char *func_prefix)
             ctx->generator_closure = NULL;
         }
     }zend_catch {
+        plcf->enabled_rewrite_inline_compile = 0;
+        plcf->enabled_access_inline_compile = 0;
+        plcf->enabled_content_inline_compile = 0;
+        plcf->enabled_log_inline_compile = 0;
+        plcf->enabled_header_filter_inline_compile = 0;
+        plcf->enabled_body_filter_inline_compile = 0;
+
         zval_ptr_dtor(&func_main);
         if ( ctx && ctx->generator_closure ){
             zval_ptr_dtor(ctx->generator_closure);
