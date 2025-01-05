@@ -167,7 +167,7 @@ ngx_php_error_cb(int type,
     /* store the error if it has changed */
     if (display) {
         if (PG(last_error_message)) {
-#if PHP_MAJOR_VERSION >= 8 && PHP_MINOR_VERSION >= 1
+#if PHP_MAJOR_VERSION >= 8 && PHP_MINOR_VERSION >= 0
             zend_string_release(PG(last_error_message));
             PG(last_error_message) = NULL;
 #else
@@ -177,7 +177,7 @@ ngx_php_error_cb(int type,
 #endif
         }
         if (PG(last_error_file)) {
-#if PHP_MAJOR_VERSION >= 8 && PHP_MINOR_VERSION >= 1
+#if PHP_MAJOR_VERSION >= 8 && PHP_MINOR_VERSION >= 0
             zend_string_release(PG(last_error_file));
             PG(last_error_file) = NULL;
 #else
