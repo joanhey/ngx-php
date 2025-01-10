@@ -427,12 +427,12 @@ ngx_http_php_zend_uthread_create(ngx_http_request_t *r, char *func_prefix)
             ctx->generator_closure = NULL;
         }
     }zend_catch {
-        plcf->enabled_rewrite_inline_compile = 0;
-        plcf->enabled_access_inline_compile = 0;
-        plcf->enabled_content_inline_compile = 0;
-        plcf->enabled_log_inline_compile = 0;
-        plcf->enabled_header_filter_inline_compile = 0;
-        plcf->enabled_body_filter_inline_compile = 0;
+//        plcf->enabled_rewrite_inline_compile = 0;
+//        plcf->enabled_access_inline_compile = 0;
+//        plcf->enabled_content_inline_compile = 0;
+//        plcf->enabled_log_inline_compile = 0;
+//        plcf->enabled_header_filter_inline_compile = 0;
+//        plcf->enabled_body_filter_inline_compile = 0;
 
         zval_ptr_dtor(&func_main);
         if ( ctx && ctx->generator_closure ){
