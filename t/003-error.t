@@ -16,5 +16,5 @@ location = /error {
 }
 --- request
 GET /error
---- error_code: 500
+--- error_code: 200
 
