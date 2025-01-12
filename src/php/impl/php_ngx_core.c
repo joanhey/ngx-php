@@ -498,7 +498,7 @@ static const zend_function_entry php_ngx_class_functions[] = {
     PHP_ME(ngx, query_args, ngx_query_args_arginfo, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
     PHP_ME(ngx, post_args, ngx_post_args_arginfo, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
     PHP_ME(ngx, sleep, ngx_sleep_arginfo, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
-    {NULL, NULL, NULL, 0, 0}
+    PHP_FE_END
 };
 
 void php_impl_ngx_core_init(int module_number )

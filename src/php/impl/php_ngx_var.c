@@ -88,7 +88,7 @@ PHP_METHOD(ngx_var, set)
 static const zend_function_entry php_ngx_var_class_functions[] = {
     PHP_ME(ngx_var, get, ngx_var_get_arginfo, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
     PHP_ME(ngx_var, set, ngx_var_set_arginfo, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
-    {NULL, NULL, NULL, 0, 0}
+    PHP_FE_END
 };
 
 void 
