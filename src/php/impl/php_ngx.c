@@ -384,7 +384,7 @@ static const zend_function_entry additional_functions[] = {
     PHP_FE(ngx_cookie_get,                  ngx_cookie_get_arginfo)
     PHP_FE(ngx_cookie_set,                  ngx_cookie_set_arginfo)
 
-    {NULL, NULL, NULL, 0, 0}
+    PHP_FE_END
 };
 
 int php_ngx_module_init()
