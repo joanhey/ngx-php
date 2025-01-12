@@ -63,7 +63,7 @@ PHP_METHOD(ngx_log, error)
 
 static const zend_function_entry php_ngx_log_class_functions[] = {
     PHP_ME(ngx_log, error, ngx_log_error_arginfo, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
-    {NULL, NULL, NULL, 0, 0}
+    PHP_FE_END
 };
 
 void 

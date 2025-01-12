@@ -67,7 +67,7 @@ PHP_FUNCTION(ngx_query_args)
     u_char              *buf, *p;
     char                *query_key=NULL;
     u_char              *last;
-    int                 idx;
+    //int                 idx;
     unsigned            parsing_value = 0;
 
     r = ngx_php_request;
@@ -78,7 +78,7 @@ PHP_FUNCTION(ngx_query_args)
         RETURN_ARR(Z_ARRVAL_P(return_value));
     }
 
-    idx = 0;
+    //idx = 0;
 
     buf = ngx_palloc(r->pool, r->args.len);
     ngx_memcpy(buf, r->args.data, r->args.len);
@@ -101,7 +101,7 @@ PHP_FUNCTION(ngx_query_args)
             add_assoc_stringl(return_value, (char *)query_key, (char *)p, buf-p);
             ngx_pfree(r->pool, query_key);
             //add_index_stringl(return_value, idx, (char *)p, buf-p);
-            idx++;
+            //idx++;
 
             buf++;
             p = buf;
@@ -118,7 +118,7 @@ PHP_FUNCTION(ngx_query_args)
         add_assoc_stringl(return_value, (char *)query_key, (char *)p, buf-p);
         ngx_pfree(r->pool, query_key);
         //add_index_stringl(return_value, idx, (char *)p, buf-p);
-        idx++;
+        //idx++;
     }
 
     ngx_pfree(r->pool, buf);
@@ -132,7 +132,7 @@ PHP_FUNCTION(ngx_post_args)
     size_t              len;
     ngx_chain_t         *cl;
     u_char              *last;
-    int                 idx;
+    //int                 idx;
     unsigned            parsing_value = 0;
 
     r = ngx_php_request;
@@ -153,7 +153,7 @@ PHP_FUNCTION(ngx_post_args)
         RETURN_ARR(Z_ARRVAL_P(return_value));
     }
 
-    idx = 0;
+    //idx = 0;
 
     buf = ngx_palloc(r->pool, len);
     p = buf;
@@ -183,7 +183,7 @@ PHP_FUNCTION(ngx_post_args)
             add_assoc_stringl(return_value, (char *)post_key, (char *)p, buf-p);
             ngx_pfree(r->pool, post_key);
             //add_index_stringl(return_value, idx, (char *)p, buf-p);
-            idx++;
+            //idx++;
 
             buf++;
             p = buf;
@@ -200,7 +200,8 @@ PHP_FUNCTION(ngx_post_args)
         add_assoc_stringl(return_value, (char *)post_key, (char *)p, buf-p);
         ngx_pfree(r->pool, post_key);
         //add_index_stringl(return_value, idx, (char *)p, buf-p);
-        idx++;
+        //idx++;
+
     }
 
     ngx_pfree(r->pool, buf);
@@ -330,7 +331,7 @@ PHP_METHOD(ngx, query_args)
     u_char              *buf, *p;
     char                *query_key=NULL;
     u_char              *last;
-    int                 idx;
+    //int                 idx;
     unsigned            parsing_value = 0;
 
     r = ngx_php_request;
@@ -341,7 +342,7 @@ PHP_METHOD(ngx, query_args)
         RETURN_ARR(Z_ARRVAL_P(return_value));
     }
 
-    idx = 0;
+    //idx = 0;
 
     buf = ngx_palloc(r->pool, r->args.len);
     ngx_memcpy(buf, r->args.data, r->args.len);
@@ -364,7 +365,7 @@ PHP_METHOD(ngx, query_args)
             add_assoc_stringl(return_value, (char *)query_key, (char *)p, buf-p);
             ngx_pfree(r->pool, query_key);
             //add_index_stringl(return_value, idx, (char *)p, buf-p);
-            idx++;
+            //idx++;
 
             buf++;
             p = buf;
@@ -381,7 +382,7 @@ PHP_METHOD(ngx, query_args)
         add_assoc_stringl(return_value, (char *)query_key, (char *)p, buf-p);
         ngx_pfree(r->pool, query_key);
         //add_index_stringl(return_value, idx, (char *)p, buf-p);
-        idx++;
+        //idx++;
     }
 
     ngx_pfree(r->pool, buf);
@@ -395,7 +396,7 @@ PHP_METHOD(ngx, post_args)
     size_t              len;
     ngx_chain_t         *cl;
     u_char              *last;
-    int                 idx;
+    //int                 idx;
     unsigned            parsing_value = 0;
 
     r = ngx_php_request;
@@ -416,7 +417,7 @@ PHP_METHOD(ngx, post_args)
         RETURN_ARR(Z_ARRVAL_P(return_value));
     }
 
-    idx = 0;
+    //idx = 0;
 
     buf = ngx_palloc(r->pool, len);
     p = buf;
@@ -446,7 +447,7 @@ PHP_METHOD(ngx, post_args)
             add_assoc_stringl(return_value, (char *)post_key, (char *)p, buf-p);
             ngx_pfree(r->pool, post_key);
             //add_index_stringl(return_value, idx, (char *)p, buf-p);
-            idx++;
+            //idx++;
 
             buf++;
             p = buf;
@@ -463,7 +464,7 @@ PHP_METHOD(ngx, post_args)
         add_assoc_stringl(return_value, (char *)post_key, (char *)p, buf-p);
         ngx_pfree(r->pool, post_key);
         //add_index_stringl(return_value, idx, (char *)p, buf-p);
-        idx++;
+        //idx++;
     }
 
     ngx_pfree(r->pool, buf);
@@ -497,7 +498,7 @@ static const zend_function_entry php_ngx_class_functions[] = {
     PHP_ME(ngx, query_args, ngx_query_args_arginfo, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
     PHP_ME(ngx, post_args, ngx_post_args_arginfo, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
     PHP_ME(ngx, sleep, ngx_sleep_arginfo, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
-    {NULL, NULL, NULL, 0, 0}
+    PHP_FE_END
 };
 
 void php_impl_ngx_core_init(int module_number )

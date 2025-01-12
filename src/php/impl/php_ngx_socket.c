@@ -169,7 +169,7 @@ static const zend_function_entry php_ngx_socket_class_functions[] = {
     PHP_ME(ngx_socket, send, ngx_socket_send_arginfo, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
     PHP_ME(ngx_socket, recv, ngx_socket_recv_arginfo, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
     PHP_ME(ngx_socket, close, ngx_socket_close_arginfo, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
-    {NULL, NULL, NULL, 0, 0}
+    PHP_FE_END
 };
 
 void
