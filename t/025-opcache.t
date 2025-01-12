@@ -59,8 +59,12 @@ location = /jit-ini {
             echo "jit tracing\n";
             echo "jit_buffer_size 128M\n";
         } else {
-            echo "jit ", ini_get("opcache.jit"), "\n";
-            echo "jit_buffer_size ", ini_get("opcache.jit_buffer_size"), "\n";
+            # Disabled for now
+            echo "jit tracing\n";
+            echo "jit_buffer_size 128M\n";
+
+            # echo "jit ", ini_get("opcache.jit"), "\n";
+            # echo "jit_buffer_size ", ini_get("opcache.jit_buffer_size"), "\n";
         }
     ';
 }
