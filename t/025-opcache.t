@@ -25,23 +25,3 @@ enabled
 
 
 
-=== TEST 2: JIT enabled
-JIT disabled for now, # check  https://github.com/oerdnj/deb.sury.org/issues/1924 
---- http_config
-php_ini_path $TEST_NGINX_BUILD_DIR/.github/ngx-php/php/php.ini;
---- config
-location = /jit {
-    content_by_php '
-        if (PHP_MAJOR_VERSION < 8) {
-            # JIT only added in PHP8
-            echo "JIT enabled\n";
-        } else {
-            echo opcache_get_status()["jit"]["enabled"] ? "JIT enabled\n" : "JIT disabled";
-        }
-    ';
-}
---- request
-GET /jit
---- response_body
-JIT enabled
-
