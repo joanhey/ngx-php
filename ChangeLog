@@ -1,3 +1,10 @@
+ngx-php 0.0.30 changes:                                                             13 Jan 2025
+    * Support php version 8.4
+
+    * Fix check args type in function ngx_header_set.
+
+    * Remove fake php_error_cb, because unknow memory leak.
+
 ngx-php 0.0.28 changes:
     * Support php version 8.3.0 [@joanhey]                                          5 Dec 2023
 
