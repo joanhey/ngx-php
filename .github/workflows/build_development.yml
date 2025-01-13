@@ -1,22 +1,28 @@
 name: Build Nightly PHP
 
 on:
+  # Each 1 of month
+  schedule:
+    - cron: "0 0 1 * *"
+
   push:
     branches:
-      - development
+      - "development"
     paths:
       - "src/**"
       - "t/**"
       - "third_party/**"
       - ".github/**"
+      - "config"
   pull_request:
     branches:
-      - development
+      - "development"
     paths:
       - "src/**"
       - "t/**"
       - "third_party/**"
       - ".github/**"
+      - "config"
 
 env:
   DB_DATABASE: ngx_php
@@ -25,22 +31,22 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
 
     strategy:
       matrix:
-        php_version: ["8.3"]
-        ngxinx_version: ["1.25.3"] # "1.12.2" fail to compile
+        php_version: ["8.4"]
+        nginx_version: ["1.26.0"] 
         # Disable fail-fast to allow all failing versions to fail in a
         # single build, rather than stopping when the first one fails.
       fail-fast: false
 
-    name: PHP-${{ matrix.php_version }} Nginx ${{ matrix.ngxinx_version }}
+    name: PHP-${{ matrix.php_version }} Nginx ${{ matrix.nginx_version }}
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Install dependencies
-        run: sudo apt-get install -yqq cpanminus libxml2-dev systemtap-sdt-dev zlib1g-dev libpcre3-dev libargon2-0-dev libsodium-dev
+        run: sudo apt-get install -yqq cpanminus libxml2-dev systemtap-sdt-dev zlib1g-dev libpcre3-dev libargon2-dev libsodium-dev libkrb5-dev redis-server redis-tools memcached
 
       - name: Setup PHP-${{ matrix.php_version }}
         uses: shivammathur/setup-php@v2
@@ -50,15 +56,15 @@ jobs:
           ini-values: opcache.enable=1, opcache.enable_cli=1, opcache.jit=tracing, opcache.jit_buffer_size=128M,error_reporting=E_ALL
           coverage: none
 
-      - name: Download Nginx v${{ matrix.ngxinx_version }}
+      - name: Download Nginx v${{ matrix.nginx_version }}
         run: |
-          wget http://nginx.org/download/nginx-${{ matrix.ngxinx_version }}.tar.gz
-          tar -zxf nginx-${{ matrix.ngxinx_version }}.tar.gz
+          wget http://nginx.org/download/nginx-${{ matrix.nginx_version }}.tar.gz
+          tar -zxf nginx-${{ matrix.nginx_version }}.tar.gz
 
       - name: Compile Ngx-php
         env:
           PHP_SRC_VERSION: ${{ matrix.php_version }}
-          NGINX_SRC_VERSION: ${{ matrix.ngxinx_version }}
+          NGINX_SRC_VERSION: ${{ matrix.nginx_version }}
         run: ./.github/ngx-php/compile-ngx.sh
 
       - name: MySQL Start and create table
@@ -69,7 +75,6 @@ jobs:
 
       - name: Install Redis & Memcached
         run: |
-          sudo apt-get install -y redis-server redis-tools memcached
           sudo redis-server /etc/redis/redis.conf
 
       - name: Perl packages
@@ -79,5 +84,5 @@ jobs:
         env:
           PHP_SRC_VERSION: ${{ matrix.php_version }}
         run: |
-          sudo sed -i "s|opcache.jit=off|opcache.jit=tracing|g" /etc/php/${PHP_SRC_VERSION}/embed/conf.d/10-opcache.ini
+          sudo bash -c "echo "opcache.jit=tracing" >> /etc/php/${PHP_SRC_VERSION}/embed/conf.d/10-opcache.ini"
           ./.github/ngx-php/test.sh

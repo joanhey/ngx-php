@@ -616,7 +616,7 @@ static const zend_function_entry php_ngx_request_class_functions[] = {
     PHP_ME(ngx_request, server_port, ngx_request_server_port_arginfo, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
     PHP_ME(ngx_request, server_name, ngx_request_server_name_arginfo, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
     PHP_ME(ngx_request, headers, ngx_request_headers_arginfo, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
-    {NULL, NULL, NULL, 0, 0}
+    PHP_FE_END
 };
 
 void

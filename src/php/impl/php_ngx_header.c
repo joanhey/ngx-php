@@ -40,6 +40,11 @@ PHP_FUNCTION(ngx_header_set)
         RETURN_NULL();
     }
 
+    if (Z_TYPE_P(value) != IS_LONG && Z_TYPE_P(value) != IS_STRING) {
+        zend_throw_error(zend_ce_type_error, "header value type must be long or string.");
+        RETURN_NULL();
+    }
+
     r = ngx_php_request;
 
     if (ngx_strncasecmp((u_char *)ZSTR_VAL(key_str), (u_char *)"content-type", 12) == 0){
