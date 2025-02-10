@@ -47,33 +47,46 @@ occurrences(const char *needle, const char *haystack) {
 }
 
 char *
-str_replace(const char *str, const char *sub, const char *replace) {
-  char *pos = (char *) str;
-  int count = occurrences(sub, str);
+str_replace(const char *str, const char *sub, const char *replace)
+{
+    char *pos = (char *)str;
+    int count = occurrences(sub, str);
 
-  if (0 >= count) return strdup(str);
+    /* 如果没有匹配，直接返回原字符串的副本 */
+    if (count <= 0) {
+        return strdup(str);
+    }
 
-  int size = (
-        strlen(str)
-      - (strlen(sub) * count)
-      + strlen(replace) * count
-    ) + 1;
+    /* 计算结果字符串所需的最大空间 */
+    int size = (int)(strlen(str) - (strlen(sub) * count)
+                     + (strlen(replace) * count) + 1);
 
-  char *result = (char *) malloc(size);
-  if (NULL == result) return NULL;
-  memset(result, '\0', size);
-  char *current;
-  while ((current = strstr(pos, sub))) {
-    int len = current - pos;
-    strncat(result, pos, len);
-    strncat(result, replace, strlen(replace));
-    pos = current + strlen(sub);
-  }
+    char *result = (char *)malloc(size);
+    if (result == NULL) {
+        return NULL;
+    }
+    memset(result, 0, size);
 
-  if (pos != (str + strlen(str))) {
-    strncat(result, pos, (str - pos));
-  }
+    char *current = NULL;
+    int offset = 0; /* 记录当前已经写入 result 的位置 */
 
-  return result;
+   /** 解决潜在的缓冲区溢出 **/
+    while ((current = strstr(pos, sub)) != NULL) {
+        int len = (int)(current - pos);
+        snprintf(result + offset, size - offset, "%.*s", len, pos);
+        offset += len;
+        
+        snprintf(result + offset, size - offset, "%s", replace);
+        offset += (int)strlen(replace);
+
+        pos = current + strlen(sub);
+    }
+
+    /* 把剩余未匹配部分直接写入结果字符串 */
+    if (*pos != '\0') {
+        snprintf(result + offset, size - offset, "%s", pos);
+    }
+
+    return result;
 }
 
