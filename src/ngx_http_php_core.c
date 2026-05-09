@@ -190,7 +190,7 @@ ngx_php_error_cb(int type,
 #endif
         }
         if (!error_filename) {
-#if PHP_MAJOR_VERSION >= 8 && PHP_MINOR_VERSION > 4
+#if PHP_MAJOR_VERSION >= 8 && PHP_MINOR_VERSION >= 1
             error_filename = ZSTR_KNOWN(ZEND_STR_UNKNOWN_CAPITALIZED);
 #else
             error_filename = "Unknown";
