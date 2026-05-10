@@ -10,7 +10,8 @@ run_tests();
 __DATA__
 === TEST 1: ini file
 ini file
-
+--- http_config
+access_log off;
 --- config
 location = /ini {
     content_by_php '
