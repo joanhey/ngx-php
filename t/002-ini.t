@@ -11,7 +11,7 @@ __DATA__
 === TEST 1: ini file
 ini file
 --- http_config
-access_log off;
+php_ini_path /home/runner/work/ngx-php/ngx-php/.github/ngx-php/php/php.ini;
 --- config
 location = /ini {
     content_by_php '
