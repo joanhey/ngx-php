@@ -10,8 +10,7 @@ run_tests();
 __DATA__
 === TEST 1: ini file
 ini file
---- http_config
-php_ini_path $TEST_NGINX_BUILD_DIR/.github/ngx-php/php/php.ini;
+
 --- config
 location = /ini {
     content_by_php '
@@ -20,5 +19,3 @@ location = /ini {
 }
 --- request
 GET /ini
---- response_body eval
-$ENV{'TRAVIS_BUILD_DIR'} . "/.github/ngx-php/php/php.ini"
