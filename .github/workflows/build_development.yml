@@ -44,7 +44,7 @@ jobs:
     name: PHP-${{ matrix.php_version }} Nginx ${{ matrix.nginx_version }}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with: { ref: development }
         # with to use development branch
       - name: Install dependencies
