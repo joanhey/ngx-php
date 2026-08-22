@@ -30,19 +30,7 @@ location = /t2 {
         echo $body."\n";
     }
 }
---- raw_request
-POST /t2 HTTP/1.1
-Host: localhost
-Transfer-Encoding: chunked
-
-5
-Hello
-5
- worl
-5
-d
-0
-
-
+--- raw_request eval
+"POST /t2 HTTP/1.1\r\nHost: localhost\r\nTransfer-Encoding: chunked\r\n\r\n5\r\nHello\r\n6\r\n world\r\n0\r\n\r\n"
 --- response_body
 Hello world
