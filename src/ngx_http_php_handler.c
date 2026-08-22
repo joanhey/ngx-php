@@ -790,16 +790,22 @@ ngx_http_php_read_request_body_callback(ngx_http_request_t *r)
         return ;
     }
 
-    cl = r->request_body->bufs;
-
-    if (cl->next == NULL){
-        len = cl->buf->last - cl->buf->pos;
-        if (len == 0){
-            ngx_http_core_run_phases(r);
-            return ;
+    len = 0;
+    for (cl = r->request_body->bufs; cl; cl = cl->next){
+        if (cl->buf == NULL){
+            continue;
         }
 
-        ctx->request_body_ctx.data = cl->buf->pos;
+        len += cl->buf->last - cl->buf->pos;
+    }
+
+    if (len == 0){
+        ngx_http_core_run_phases(r);
+        return ;
+    }
+
+    if (r->request_body->bufs->next == NULL){
+        ctx->request_body_ctx.data = r->request_body->bufs->buf->pos;
         ctx->request_body_ctx.len = len;
         //ngx_log_error(NGX_LOG_INFO, r->connection->log, 0, "request_body(%d|%d): %V", len, strlen((char *)ctx->request_body_ctx.data), &ctx->request_body_ctx);
         if (ctx->request_body_more){
@@ -809,19 +815,13 @@ ngx_http_php_read_request_body_callback(ngx_http_request_t *r)
         return ;
     }
 
-    len = 0;
-    for (; cl; cl = cl->next){
-        len += cl->buf->last - cl->buf->pos;
-    }
-
-    if (len == 0){
-        ngx_http_core_run_phases(r);
-        return ;
-    }
-
     buf = ngx_palloc(r->pool, len);
     p = buf;
     for (cl = r->request_body->bufs; cl; cl = cl->next){
+        if (cl->buf == NULL){
+            continue;
+        }
+
         p = ngx_copy(p, cl->buf->pos, cl->buf->last - cl->buf->pos);
     }
 
