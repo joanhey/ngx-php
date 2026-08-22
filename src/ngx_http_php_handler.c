@@ -280,6 +280,7 @@ ngx_http_php_rewrite_inline_handler(ngx_http_request_t *r)
         r->request_body_in_single_buf = 1;
         r->request_body_in_persistent_file = 1;
         r->request_body_in_clean_file = 1;
+        ctx->request_body_more = 1;
 
         ngx_php_debug("read_request_body_done: %d", (int)ctx->read_request_body_done);
 
@@ -294,8 +295,7 @@ ngx_http_php_rewrite_inline_handler(ngx_http_request_t *r)
 
         if (rc == NGX_AGAIN) {
             ctx->request_body_more = 1;
-            ctx->read_request_body_done = 0;
-            return NGX_AGAIN;
+            return NGX_DONE;
         }
 
         return rc;
@@ -1047,6 +1047,7 @@ ngx_http_php_content_inline_handler(ngx_http_request_t *r)
         r->request_body_in_single_buf = 1;
         r->request_body_in_persistent_file = 1;
         r->request_body_in_clean_file = 1;
+        ctx->request_body_more = 1;
 
         ngx_php_debug("read_request_body_done: %d", (int)ctx->read_request_body_done);
 
@@ -1061,8 +1062,7 @@ ngx_http_php_content_inline_handler(ngx_http_request_t *r)
 
         if (rc == NGX_AGAIN) {
             ctx->request_body_more = 1;
-            ctx->read_request_body_done = 0;
-            return NGX_AGAIN;
+            return NGX_DONE;
         }
 
         return rc;

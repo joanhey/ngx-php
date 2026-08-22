@@ -31,6 +31,6 @@ location = /t2 {
     }
 }
 --- raw_request eval
-"POST /t2 HTTP/1.1\r\nHost: localhost\r\nTransfer-Encoding: chunked\r\n\r\n5\r\nHello\r\n6\r\n world\r\n0\r\n\r\n"
+"POST /t2 HTTP/1.1\r\nHost: localhost\r\nConnection: close\r\nTransfer-Encoding: chunked\r\n\r\n5\r\nHello\r\n6\r\n world\r\n0\r\n\r\n"
 --- response_body
 Hello world
