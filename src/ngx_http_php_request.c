@@ -187,7 +187,6 @@ ngx_http_php_request_get_request_body(ngx_http_request_t *r)
     u_char *p;
     u_char *data;
     size_t len;
-    ngx_buf_t *buf, *next;
     ngx_chain_t *cl;
     ngx_str_t body = ngx_null_string;
 
