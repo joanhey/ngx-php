@@ -124,6 +124,9 @@ $ : "app.conf: Create nginx config"
 $ docker run -p 80:80 -v $PWD/app.conf:/etc/nginx/conf.d/default.conf nginx-php7
 ```
 
+
+Only to developers of ngx-php code !!
+
 To build and run the Ubuntu 24.04 regression tests locally:
 
 ```sh
