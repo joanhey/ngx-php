@@ -150,7 +150,7 @@ ngx_php_error_cb(int type,
         if (strcmp(PG(last_error_message), buffer)
 #endif
             || (!PG(ignore_repeated_source)
-                && ((PG(last_error_lineno) != (int)error_lineno)
+                && ((PG(last_error_lineno) != (uint32_t) error_lineno)
 #if PHP_MAJOR_VERSION >= 8 && PHP_MINOR_VERSION > 0
                     || !zend_string_equals(PG(last_error_file), error_filename)))) {
 #else
