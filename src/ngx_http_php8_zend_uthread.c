@@ -355,7 +355,7 @@ cleanup_args:
         }
     }
 
-    orig_fake_scope = EG(fake_scope);
+    const orig_fake_scope = EG(fake_scope);
     EG(fake_scope) = NULL;
     if (func->type == ZEND_USER_FUNCTION) {
         int call_via_handler = (func->common.fn_flags & ZEND_ACC_CALL_VIA_TRAMPOLINE) != 0;
