@@ -25,7 +25,8 @@ PHP_SRC_ROOT=`pwd`'/php'
 cd ${PHP_SRC}
 
 echo "php install ..."
-./configure --prefix=${PHP_SRC_ROOT} \
+./configure CFLAGS="-Wno-clobbered" \
+--prefix=${PHP_SRC_ROOT} \
 --with-config-file-path=${PHP_SRC_ROOT} \
 --with-mysqli=mysqlnd \
 --with-pdo-mysql=mysqlnd \
