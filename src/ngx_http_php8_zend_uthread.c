@@ -154,7 +154,7 @@ static int ngx_http_php_zend_call_function(zend_fcall_info *fci, zend_fcall_info
     zend_function *func;
     uint32_t call_info;
     void *object_or_called_scope;
-    zend_class_entry *orig_fake_scope;
+    const zend_class_entry *orig_fake_scope;
 
     ZVAL_UNDEF(fci->retval);
 
@@ -355,7 +355,7 @@ cleanup_args:
         }
     }
 
-    const orig_fake_scope = EG(fake_scope);
+    orig_fake_scope = EG(fake_scope);
     EG(fake_scope) = NULL;
     if (func->type == ZEND_USER_FUNCTION) {
         int call_via_handler = (func->common.fn_flags & ZEND_ACC_CALL_VIA_TRAMPOLINE) != 0;
