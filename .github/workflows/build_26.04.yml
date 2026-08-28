@@ -28,7 +28,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt update
-          sudo apt-get install -yqq cpanminus libxml2-dev systemtap-sdt-dev zlib1g-dev libpcre2-dev libargon2-dev libsodium-dev libkrb5-dev redis-server redis-tools memcached
+          sudo apt-get install -yqq cpanminus libxml2-dev systemtap-sdt-dev zlib1g-dev libpcre2-dev libargon2-dev libsodium-dev libkrb5-dev libcrypt-dev redis-server redis-tools memcached
 
       - name: Setup PHP-${{ matrix.php_version }}
         uses: shivammathur/setup-php@v2
