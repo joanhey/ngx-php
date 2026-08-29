@@ -47,6 +47,7 @@ location = /ngx_socket_slow_backend {
         echo "hello ngx_socket";
         yield ngx_msleep(200);
         echo " world ngx_socket";
+        echo str_repeat("!", 100000);
     }
 }
 location = /ngx_socket_slow {
@@ -56,12 +57,21 @@ location = /ngx_socket_slow {
         yield ngx_socket_connect($fd, "127.0.0.1", $TEST_NGINX_SERVER_PORT);
         $send_buf = "GET /ngx_socket_slow_backend HTTP/1.1\r\nHost: 127.0.0.1\r\nConnection: close\r\n\r\n";
         yield ngx_socket_send($fd, $send_buf, strlen($send_buf));
-        $ret = "";
-        yield ngx_socket_recv($fd, $ret, 1024);
+        $resp = "";
+        while (true) {
+            $ret = "";
+            yield ngx_socket_recv($fd, $ret, 1024);
+            if (!is_string($ret) || $ret === "") {
+                break;
+            }
+            $resp .= $ret;
+        }
         yield ngx_socket_close($fd);
-        $ret = explode("\r\n", $ret);
-        var_dump($ret[0]);
-        var_dump(end($ret));
+        $resp = explode("\r\n", $resp);
+        $body = end($resp);
+        var_dump($resp[0]);
+        var_dump(substr($body, 0, 33));
+        var_dump(strlen($body));
     }
 }
 --- request
@@ -69,5 +79,6 @@ GET /ngx_socket_slow
 --- response_body
 string(15) "HTTP/1.1 200 OK"
 string(33) "hello ngx_socket world ngx_socket"
+int(100033)
 
 
