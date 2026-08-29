@@ -68,6 +68,6 @@ location = /ngx_socket_slow {
 GET /ngx_socket_slow
 --- response_body
 string(15) "HTTP/1.1 200 OK"
-string(23) "hello ngx_socket world ngx_socket"
+string(33) "hello ngx_socket world ngx_socket"
 
 
