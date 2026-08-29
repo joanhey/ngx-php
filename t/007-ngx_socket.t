@@ -45,6 +45,8 @@ location = /ngx_socket_slow_backend {
     content_by_php_block {
         yield ngx_msleep(200);
         echo "hello ngx_socket";
+        yield ngx_msleep(200);
+        echo " world ngx_socket";
     }
 }
 location = /ngx_socket_slow {
@@ -66,6 +68,6 @@ location = /ngx_socket_slow {
 GET /ngx_socket_slow
 --- response_body
 string(15) "HTTP/1.1 200 OK"
-string(16) "hello ngx_socket"
+string(23) "hello ngx_socket world ngx_socket"
 
 
